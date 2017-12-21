@@ -1,0 +1,6 @@
+If you want to use the software on an ILI9341, then tobozo has created an excelllent version see here:
+
+ttps://github.com/tobozo/ESP32-8-Octave-Audio-Spectrum-Display/tree/wrover-kit
+
+It also includes the ability to change your microphone response by for example, increasing gain at higher frequencies to compensate for
+a fall-off in sensitivity.
