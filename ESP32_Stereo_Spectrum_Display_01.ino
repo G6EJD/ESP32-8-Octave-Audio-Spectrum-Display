@@ -71,7 +71,7 @@ void loop() {
     LvImag[i] = 0;
     RvReal[i] = analogRead(39); // Using Arduino ADC nomenclature. A conversion takes about 1uS on an ESP32
     RvImag[i] = 0;
-    while (micros() < (newTime + sampling_period_us)) { /* do nothing to wait */ }
+    while ((micros() - newTime) < sampling_period_us) { /* do nothing to wait */ }
   }
   FFT.Windowing(LvReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
   FFT.Compute(LvReal, LvImag, SAMPLES, FFT_FORWARD);
