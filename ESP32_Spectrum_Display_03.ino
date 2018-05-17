@@ -1,17 +1,23 @@
 /* ESP32 Audio Spectrum Analyser on an SSD1306/SH1106 Display, 8-bands 125, 250, 500, 1k, 2k, 4k, 8k, 16k
  * Improved noise performance and speed and resolution.
- * The MIT License (MIT) Copyright (c) 2017 by David Bird. 
- * The formulation and display of an AUdio Spectrum using an ESp8266 or ESP32 and SSD1306 or SH1106 OLED Display using a Fast Fourier Transform
- * Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files 
- * (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, 
- * publish, distribute, but not to use it commercially for profit making or to sub-license and/or to sell copies of the Software or to 
- * permit persons to whom the Software is furnished to do so, subject to the following conditions:  
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software. 
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES 
- * OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE 
- * LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN 
- * CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. 
- * See more at http://dsbird.org.uk 
+  *####################################################################################################################################  
+ This software, the ideas and concepts is Copyright (c) David Bird 2018. All rights to this software are reserved.
+ 
+ Any redistribution or reproduction of any part or all of the contents in any form is prohibited other than the following:
+ 1. You may print or download to a local hard disk extracts for your personal and non-commercial use only.
+ 2. You may copy the content to individual third parties for their personal use, but only if you acknowledge the author David Bird as the source of the material.
+ 3. You may not, except with my express written permission, distribute or commercially exploit the content.
+ 4. You may not transmit it or store it in any other website or other form of electronic retrieval system for commercial purposes.
+
+ The above copyright ('as annotated') notice and this permission notice shall be included in all copies or substantial portions of the Software and where the
+ software use is visible to an end-user.
+ 
+ THE SOFTWARE IS PROVIDED "AS IS" FOR PRIVATE USE ONLY, IT IS NOT FOR COMMERCIAL USE IN WHOLE OR PART OR CONCEPT. FOR PERSONAL USE IT IS SUPPLIED WITHOUT WARRANTY 
+ OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+ IN NO EVENT SHALL THE AUTHOR OR COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING 
+ FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+ See more at http://www.dsbird.org.uk
+
 */
 
 #include <Wire.h>
@@ -52,13 +58,12 @@ void loop() {
   display.clear();        
   display.drawString(0,0,"125 250 500 1K  2K 4K 8K 16K");
   for (int i = 0; i < SAMPLES; i++) {
-    newTime = micros()-oldTime;
-    oldTime = newTime;
+    newTime = micros();
     vReal[i] = analogRead(A0); // Using Arduino ADC nomenclature. A conversion takes about 1uS on an ESP32
   //vReal[i] = analogRead(VP); // Using logical name fo ADC port
   //vReal[i] = analogRead(36); // Using pin number for ADC port
     vImag[i] = 0;
-    while (micros() < (newTime + sampling_period_us)) { /* do nothing to wait */ }
+    while (micros() - newTime < sampling_period_us) { /* do nothing to wait */ }
   }
   FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
   FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
