@@ -65,8 +65,7 @@ void loop() {
   display.clear();        
   display.drawString(0,0,"125 250 500 1K  2K 4K 8K 16K");
   for (int i = 0; i < SAMPLES; i++) {
-    newTime = micros()-oldTime;
-    oldTime = newTime;
+    newTime = micros();
     //VP input = Left, VN = Right
     LvReal[i] = analogRead(36); // Using Arduino ADC nomenclature. A conversion takes about 1uS on an ESP32
     LvImag[i] = 0;
