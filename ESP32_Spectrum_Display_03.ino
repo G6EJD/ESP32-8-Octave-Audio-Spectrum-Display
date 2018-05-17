@@ -63,7 +63,7 @@ void loop() {
   //vReal[i] = analogRead(VP); // Using logical name fo ADC port
   //vReal[i] = analogRead(36); // Using pin number for ADC port
     vImag[i] = 0;
-    while (micros() - newTime < sampling_period_us) { /* do nothing to wait */ }
+    while ((micros() - newTime) < sampling_period_us) { /* do nothing to wait */ }
   }
   FFT.Windowing(vReal, SAMPLES, FFT_WIN_TYP_HAMMING, FFT_FORWARD);
   FFT.Compute(vReal, vImag, SAMPLES, FFT_FORWARD);
