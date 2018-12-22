@@ -16,6 +16,9 @@ You must place the font.h file in the same location as the sketch. The Font file
 
 Please note, if you use a microphone - speaker test environment it is highly likely (unless of very high bandwidth and quality) that both the microphone and speakers used have insufficient quality to ensure you are getting a flat frequency response for the Fast Fourier Transform to convert and display. The only way to ensure you see the correct result is to feed approximately 50mV to 100mV pk-pk of audio directly into the ADC port with no DC offset. This is not a fault with the software or display or FFT - it’s the laws of physics!
 
+TFT Version by Tobozo:
+https://github.com/tobozo/ESP32-Audio-Spectrum-Waveform-Display/tree/wrover-kit
+
 
 
 
